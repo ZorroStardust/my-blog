@@ -8,6 +8,9 @@ const allPosts = await getCollection('blog');
 const sortedPosts = allPosts.sort((a, b) => 
   new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
 );
+// 基于站点配置生成正确的文章链接；直接拼接 BASE_URL 避免无协议 URL 报错
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const toPostHref = (slug) => `${base}blog/${slug}/`;
 ---
 
 <Layout>
@@ -19,7 +22,7 @@ const sortedPosts = allPosts.sort((a, b) =>
       {sortedPosts.map((post) => (
         <article class="post-card">
           <h2>
-            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+            <a href={toPostHref(post.slug)}>{post.data.title}</a>
           </h2>
           <div class="post-meta">
             <time datetime={post.data.pubDate}>

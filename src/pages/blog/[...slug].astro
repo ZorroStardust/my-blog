@@ -12,6 +12,9 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+// 返回博客列表时保持 base 路径正确；直接拼接 BASE_URL 避免无协议 URL 报错
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const blogListHref = `${base}blog/`;
 ---
 
 <Layout>
@@ -45,7 +48,7 @@ const { Content } = await entry.render();
       </div>
       
       <footer class="article-footer">
-        <a href="/blog" class="back-link">← 返回博客列表</a>
+        <a href={blogListHref} class="back-link">← 返回博客列表</a>
       </footer>
     </article>
   </main>
