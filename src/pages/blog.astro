@@ -2,8 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-// 获取所有博客文章
-const allPosts = await getCollection('blog');
+// 获取所有博客文章（排除草稿）
+const allPosts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
 // 按发布日期排序
 const sortedPosts = allPosts.sort((a, b) => 
   new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()

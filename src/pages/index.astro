@@ -2,8 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-// 获取所有博客文章
-const allPosts = await getCollection('blog');
+// 获取所有博客文章（排除草稿）
+const allPosts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
 // 按发布日期排序
 const sortedPosts = allPosts.sort((a, b) => 
   new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
@@ -15,8 +17,8 @@ const toPostHref = (slug) => `${base}blog/${slug}/`;
 
 <Layout>
   <main class="container">
-    <h1>BLACKZorro的博客</h1>
-    <p class="subtitle">欢迎来到我的博客，分享技术与生活</p>
+    <h1>BLACKZorro's Mars Station</h1>
+    <p class="subtitle">欢迎来到贫瘠之地</p>
     
     <div class="posts-list">
       {sortedPosts.map((post) => (

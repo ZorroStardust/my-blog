@@ -3,6 +3,7 @@ title: "测试博客文章"
 description: "这是一个用于测试的博客文章，展示博客系统的各种功能"
 pubDate: "2025-12-11"
 tags: ["测试", "示例", "Astro"]
+draft: true
 ---
 
 # 欢迎来到测试博客
