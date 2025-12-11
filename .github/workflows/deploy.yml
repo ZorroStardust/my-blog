@@ -1,13 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  # 每次推送到 main 分支时自动部署
   push:
     branches: [ main ]
-  # 允许在 GitHub Actions 页面手动触发
   workflow_dispatch:
 
-# 允许 workflow 访问代码、创建 Pages 部署
 permissions:
   contents: read
   pages: write
@@ -18,15 +15,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout your repository
         uses: actions/checkout@v5
 
       - name: Install, build, and upload your site
         uses: withastro/action@v5
-        # 默认会自动识别 npm/pnpm/yarn，不需要特别配置
-        # 如果你的项目在子目录，可以设置 path，比如：
-        # with:
-        #   path: ./my-blog
 
   deploy:
     needs: build
